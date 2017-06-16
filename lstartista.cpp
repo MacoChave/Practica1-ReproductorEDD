@@ -7,6 +7,7 @@ NodoArtista::NodoArtista(char *artista_)
 {
     artista = new char[sizeof(artista_) + 1];
     strcpy(artista, artista_);
+    lista = new LstAlbum();
     anterior = NULL;
     siguiente = NULL;
 }
@@ -32,6 +33,7 @@ void LSTArtista::agregar(NodoArtista *actual, char *artista, char *album, char *
             primero = nuevo;
 
             /* AGREGAR ALBUM */
+            primero->lista->add(album, cancion, path, valoracion);
         }
         else if (strcmp(ultimo->artista, artista) < 0)
         {
@@ -44,6 +46,7 @@ void LSTArtista::agregar(NodoArtista *actual, char *artista, char *album, char *
             ultimo = nuevo;
 
             /* AGREGAR ALBUM */
+            ultimo->lista->add(album, cancion, path, valoracion);
         }
         else
         {
@@ -57,6 +60,7 @@ void LSTArtista::agregar(NodoArtista *actual, char *artista, char *album, char *
                 actual->anterior = nuevo;
 
                 /* AGREGAR ALBUM */
+                nuevo->lista->add(album, cancion, path, valoracion);
             }
             else if (strcmp(actual->artista, artista) < 0)
             {
@@ -65,6 +69,7 @@ void LSTArtista::agregar(NodoArtista *actual, char *artista, char *album, char *
             else
             {
                 /* AGREGAR ALBUM */
+                actual->lista->add(album, cancion, path, valoracion);
             }
         }
     }
@@ -74,6 +79,9 @@ void LSTArtista::agregar(NodoArtista *actual, char *artista, char *album, char *
         primero->anterior = primero;
         primero->siguiente = primero;
         ultimo = primero;
+
+        /* AGREGAR ALBUM */
+        primero->lista->add(album, cancion, path, valoracion);
     }
 }
 
@@ -82,12 +90,13 @@ void LSTArtista::eliminar(NodoArtista *actual, char *artista, char *album, char 
 
 }
 
-void LSTArtista::graficar(int contador)
+void LSTArtista::graficar()
 {
     NodoArtista *tmp = primero;
+    char dot[500];
 
-    char dot[256];
-    sprintf(dot, "node%d[label=\"", contador);
+    /* LISTAR ARTISTAS */
+    sprintf(dot, "\tnode0[label=\"");
     while (tmp != ultimo)
     {
         strcat(dot, "<");
@@ -112,6 +121,16 @@ void LSTArtista::graficar(int contador)
         fflush(archivo);
         fclose(archivo);
     }
+
+    tmp = primero;
+    /* LISTAR ALBUMES */
+    while (tmp != ultimo)
+    {
+        tmp->lista->graph(tmp->artista);
+        tmp = tmp->siguiente;
+    }
+    tmp->lista->graph(tmp->artista);
+    tmp = tmp->siguiente;
 }
 
 void LSTArtista::add(char *artista, char *album, char *cancion, char *path, float valoracion)
@@ -126,20 +145,7 @@ void LSTArtista::remove(char *artista, char *album, char *cancion)
 
 void LSTArtista::clear()
 {
-    if (primero != NULL)
-    {
-        ultimo->siguiente = NULL;
-        primero->anterior = NULL;
 
-        NodoArtista *tmp = primero;
-        while(primero != NULL)
-        {
-            primero = primero->siguiente;
-            delete(tmp);
-        }
-        primero = NULL;
-        ultimo = NULL;
-    }
 }
 
 void LSTArtista::graph()
@@ -147,7 +153,7 @@ void LSTArtista::graph()
     char dot[128];
     strcpy(dot, "digraph btk {\n");
     strcat(dot, "\tnodesep=.05;\n");
-    strcat(dot, "\trankdir=TD;\n");
+    strcat(dot, "\trankdir=TB;\n");
     strcat(dot, "\tnode [shape=record,width=1.5,height=.5];\n");
 
     FILE *archivo;
@@ -160,7 +166,7 @@ void LSTArtista::graph()
         fclose(archivo);
     }
 
-    graficar(0);
+    graficar();
 
     strcpy(dot, "}");
 
