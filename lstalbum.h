@@ -1,5 +1,6 @@
 #ifndef LSTALBUM_H
 #define LSTALBUM_H
+#include "lstcancion.h"
 
 class NodoAlbum
 {
@@ -7,6 +8,7 @@ public:
     NodoAlbum(char* album_);
 
     char *album;
+    LSTCancion *lista;
     NodoAlbum *siguiente;
     NodoAlbum *anterior;
 };

@@ -15,10 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         principal.cpp \
     lstartista.cpp \
-    lstalbum.cpp
+    lstalbum.cpp \
+    lstcancion.cpp
 
 HEADERS  += principal.h \
     lstartista.h \
-    lstalbum.h
+    lstalbum.h \
+    lstcancion.h
 
 FORMS    += principal.ui

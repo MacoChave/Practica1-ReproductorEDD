@@ -13,6 +13,7 @@ NodoAlbum::NodoAlbum(char *album_)
 {
     album = new char[sizeof(album_) + 1];
     strcpy(album, album_);
+    lista = new LSTCancion();
     anterior = NULL;
     siguiente = NULL;
 }
@@ -30,6 +31,7 @@ void LstAlbum::agregar(NodoAlbum *actual, char *album, char *cancion, char *path
             primero = nuevo;
 
             /* AGREGAR CANCION */
+            primero->lista->add(cancion, path, valoracion);
         }
         else if (strcmp(ultimo->album, album) < 0)
         {
@@ -40,6 +42,7 @@ void LstAlbum::agregar(NodoAlbum *actual, char *album, char *cancion, char *path
             ultimo = nuevo;
 
             /* AGREGAR CANCION */
+            ultimo->lista->add(cancion, path, valoracion);
         }
         else
         {
@@ -53,6 +56,7 @@ void LstAlbum::agregar(NodoAlbum *actual, char *album, char *cancion, char *path
                 actual->anterior = nuevo;
 
                 /* AGREGAR CANCION */
+                nuevo->lista->add(cancion, path, valoracion);
             }
             else if (strcmp(actual->album, album) < 0)
             {
@@ -61,6 +65,7 @@ void LstAlbum::agregar(NodoAlbum *actual, char *album, char *cancion, char *path
             else
             {
                 /* AGREGAR CANCION */
+                actual->lista->add(cancion, path, valoracion);
             }
         }
     }
@@ -68,6 +73,7 @@ void LstAlbum::agregar(NodoAlbum *actual, char *album, char *cancion, char *path
     {
         primero = new NodoAlbum(album);
         ultimo = primero;
+        primero->lista->add(cancion, path, valoracion);
     }
 }
 
@@ -91,13 +97,13 @@ void LstAlbum::remove(char *album, char *cancion)
 
 }
 
-void LstAlbum::graph(char *album)
+void LstAlbum::graph(char *artista)
 {
     NodoAlbum *tmp = primero;
     char dot[500];
 
     /* LISTAR ALBUM */
-    sprintf(dot, "\tnd%s[label=\"", album);
+    sprintf(dot, "\tnd%s[label=\"", artista);
     while (tmp != NULL)
     {
         strcat(dot, "<");
@@ -109,9 +115,9 @@ void LstAlbum::graph(char *album)
     }
     strcat(dot, "\"]\n\n");
     strcat(dot, "\tnode0:");
-    strcat(dot, album);
+    strcat(dot, artista);
     strcat(dot, " -> nd");
-    strcat(dot, album);
+    strcat(dot, artista);
     strcat(dot, ";\n");
 
     FILE *archivo;
@@ -122,6 +128,14 @@ void LstAlbum::graph(char *album)
         fprintf(archivo, "%s", dot);
         fflush(archivo);
         fclose(archivo);
+    }
+
+    tmp = primero;
+    /* LISTAR CANCIONES */
+    while (tmp != NULL)
+    {
+        tmp->lista->graph(tmp->album, artista);
+        tmp = tmp->siguiente;
     }
 }
 

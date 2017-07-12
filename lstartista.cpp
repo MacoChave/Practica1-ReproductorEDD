@@ -130,7 +130,6 @@ void LSTArtista::graficar()
         tmp = tmp->siguiente;
     }
     tmp->lista->graph(tmp->artista);
-    tmp = tmp->siguiente;
 }
 
 void LSTArtista::add(char *artista, char *album, char *cancion, char *path, float valoracion)

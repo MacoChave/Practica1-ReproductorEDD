@@ -1,0 +1,63 @@
+digraph btk {
+	nodesep=.05;
+	rankdir=TB;
+	node [shape=record,width=1.5,height=.5];
+	node0[label="<AKG>AKG | <AlunaGeorge>AlunaGeorge | <Avicii>Avicii | <CalvinHarris>CalvinHarris | <Chvrches>Chvrches | <FosterThePeople>FosterThePeople | <Porta>Porta"]
+	ndAKG[label="<BloodCirculation>BloodCirculation | <Jpop>Jpop | "]
+
+	node0:AKG -> ndAKG;
+	ndBloodCirculation[label="<BloodCirculation>BloodCirculation | "]
+
+	ndAKG:BloodCirculation -> ndBloodCirculation;
+	ndJpop[label="<Rewrite>Rewrite | "]
+
+	ndAKG:Jpop -> ndJpop;
+	ndAlunaGeorge[label="<IRemember>IRemember | "]
+
+	node0:AlunaGeorge -> ndAlunaGeorge;
+	ndIRemember[label="<ImInControl>ImInControl | "]
+
+	ndAlunaGeorge:IRemember -> ndIRemember;
+	ndAvicii[label="<Levels>Levels | <Stories>Stories | <TheDays>TheDays | <True>True | "]
+
+	node0:Avicii -> ndAvicii;
+	ndLevels[label="<Levels>Levels | "]
+
+	ndAvicii:Levels -> ndLevels;
+	ndStories[label="<TheNights>TheNights | "]
+
+	ndAvicii:Stories -> ndStories;
+	ndTheDays[label="<TheDays>TheDays | "]
+
+	ndAvicii:TheDays -> ndTheDays;
+	ndTrue[label="<WakeMeUp>WakeMeUp | "]
+
+	ndAvicii:True -> ndTrue;
+	ndCalvinHarris[label="<Motion>Motion | "]
+
+	node0:CalvinHarris -> ndCalvinHarris;
+	ndMotion[label="<Summer>Summer | "]
+
+	ndCalvinHarris:Motion -> ndMotion;
+	ndChvrches[label="<FIFA14>FIFA14 | "]
+
+	node0:Chvrches -> ndChvrches;
+	ndFIFA14[label="<WeSink>WeSink | "]
+
+	ndChvrches:FIFA14 -> ndFIFA14;
+	ndFosterThePeople[label="<Torches>Torches | "]
+
+	node0:FosterThePeople -> ndFosterThePeople;
+	ndTorches[label="<Houdini>Houdini | <PumpedUpKiks>PumpedUpKiks | "]
+
+	ndFosterThePeople:Torches -> ndTorches;
+	ndPorta[label="<EnBocaDeTantos>EnBocaDeTantos | <Reset>Reset | "]
+
+	node0:Porta -> ndPorta;
+	ndEnBocaDeTantos[label="<AccionYReaccion>AccionYReaccion | <SinTi>SinTi | "]
+
+	ndPorta:EnBocaDeTantos -> ndEnBocaDeTantos;
+	ndReset[label="<CausaYEfecto>CausaYEfecto | <PalabrasMudas>PalabrasMudas | "]
+
+	ndPorta:Reset -> ndReset;
+}
